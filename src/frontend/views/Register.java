@@ -16,8 +16,8 @@ import backend.services.UserService;
 import frontend.utils.GeneralUtils;
 
 public class Register extends JFrame {
-    private Timer timerCarousel = new Timer();
-    private TimerTask recorrerCarousel;
+    private Timer alertTimer = new Timer();
+    private TimerTask timerTask;
     private GeneralUtils generalUtils;
     private JTextField idText;
     private JTextField nameText;
@@ -126,19 +126,19 @@ public class Register extends JFrame {
     }
 
     private void startTimer() {
-        recorrerCarousel = new TimerTask() {
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 alert.setVisible(false);
                 cancelTimer();
             }
         };
-        timerCarousel.schedule(recorrerCarousel, 2000, 2000);
+        alertTimer.schedule(timerTask, 2000, 2000);
     }
 
     private void cancelTimer() {
         try {
-            recorrerCarousel.cancel();
+            timerTask.cancel();
         } catch (Exception e) {
         }
     }
