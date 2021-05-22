@@ -1,4 +1,4 @@
-package frontend.utils;
+package frontend.views.utils;
 
 import java.awt.Color;
 import java.awt.Font;

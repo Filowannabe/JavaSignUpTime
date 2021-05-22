@@ -1,9 +1,9 @@
 package backend.repositories;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import backend.data.DataBase;
-
 
 public class UserRepository {
 
@@ -20,5 +20,15 @@ public class UserRepository {
         preparedStatement.setString(4, mail);
 
         preparedStatement.execute();
+    }
+
+    public ResultSet getAllUsers() throws SQLException {
+
+        String query = "select * from users";
+        preparedStatement = conection.setConection().prepareStatement(query);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        return resultSet;
     }
 }

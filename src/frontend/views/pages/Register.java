@@ -1,4 +1,4 @@
-package frontend.views;
+package frontend.views.pages;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -6,16 +6,16 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.TimerTask;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.util.Timer;
 import backend.models.User;
 import backend.services.UserService;
-import frontend.utils.GeneralUtils;
+import frontend.navigator.Navigator;
+import frontend.views.utils.GeneralUtils;
 
-public class Register extends JFrame {
+public class Register extends JPanel {
     private Timer alertTimer = new Timer();
     private TimerTask timerTask;
     private GeneralUtils generalUtils;
@@ -29,13 +29,15 @@ public class Register extends JFrame {
     private JLabel name;
     private JLabel phone;
     private JLabel mail;
+    private Navigator parent;
     private UserService userService = new UserService();
 
-    public Register() {
+    public Register(Navigator parent) {
+        this.parent = parent;
         JPanel panel = new JPanel();
         generalUtils = new GeneralUtils();
         panel.setLayout(null);
-        panel.setBounds(0, 0, 600, 400);
+        panel.setBounds(0, 0, parent.getBodyWidth(), parent.getBodyHeight());
         panel.setBackground(new Color(36, 36, 36));
 
         id = new JLabel();
@@ -44,10 +46,10 @@ public class Register extends JFrame {
         mail = new JLabel();
         alert = new JLabel();
 
-        mail.setBounds(250 - 40, (500 / 3) - 20, 40, 20);
-        phone.setBounds(250 - 40, (500 / 3) - 40, 60, 20);
-        name.setBounds(250 - 40, (500 / 3) - 60, 40, 20);
-        id.setBounds(250 - 40, (500 / 3) - 80, 40, 20);
+        mail.setBounds((parent.getBodyWidth() / 2) - 80, (parent.getBodyHeight() / 3), 100, 40);
+        phone.setBounds((parent.getBodyWidth() / 2) - 80, (parent.getBodyHeight() / 3) + 40, 100, 40);
+        name.setBounds((parent.getBodyWidth() / 2) - 80, (parent.getBodyHeight() / 3) - 40, 100, 40);
+        id.setBounds((parent.getBodyWidth() / 2) - 80, (parent.getBodyHeight() / 3) - 80, 100, 40);
 
         phone.setForeground(new Color(255, 255, 255));
         mail.setForeground(new Color(255, 255, 255));
@@ -59,23 +61,23 @@ public class Register extends JFrame {
         phoneText = new JTextField();
         mailText = new JTextField();
 
-        generalUtils.changeFontAndText(id, true, "Tahoma", 15, "id");
-        generalUtils.changeFontAndText(phone, true, "Tahoma", 15, "phone");
-        generalUtils.changeFontAndText(name, true, "Tahoma", 15, "name");
-        generalUtils.changeFontAndText(mail, true, "Tahoma", 15, "mail");
+        generalUtils.changeFontAndText(id, true, "Tahoma", 30, "id");
+        generalUtils.changeFontAndText(phone, true, "Tahoma", 30, "phone");
+        generalUtils.changeFontAndText(name, true, "Tahoma", 30, "name");
+        generalUtils.changeFontAndText(mail, true, "Tahoma", 30, "mail");
 
-        mailText.setBounds(250 + 80, (500 / 3) - 20, 100, 20);
-        phoneText.setBounds(250 + 80, (500 / 3) - 40, 100, 20);
-        nameText.setBounds(250 + 80, (500 / 3) - 60, 100, 20);
-        idText.setBounds(250 + 80, (500 / 3) - 80, 100, 20);
+        mailText.setBounds((parent.getBodyWidth() / 2) + 80, (parent.getBodyHeight() / 3) + 50, 100, 25);
+        phoneText.setBounds((parent.getBodyWidth() / 2) + 80, (parent.getBodyHeight() / 3) + 10, 100, 25);
+        nameText.setBounds((parent.getBodyWidth() / 2) + 80, (parent.getBodyHeight() / 3) - 30, 100, 25);
+        idText.setBounds((parent.getBodyWidth() / 2) + 80, (parent.getBodyHeight() / 3) - 70, 100, 25);
 
-        alert.setBounds(250 - 40, (500 / 3) + 60, 200, 20);
+        alert.setBounds((parent.getBodyWidth() / 2) - 40, (parent.getBodyHeight() / 3) + 60, 200, 20);
         generalUtils.changeFontAndText(alert, true, "Tahoma", 15, "USER IS SAVED.");
         alert.setForeground(new Color(30, 140, 30));
         alert.setVisible(false);
 
         submit = new JButton("submit");
-        submit.setBounds(250 - 40, (500 / 3) + 20, 100, 20);
+        submit.setBounds((parent.getBodyWidth() / 2) - 80, (parent.getBodyHeight() / 3) + 120, 150, 35);
         submit.setBackground(new Color(30, 140, 30));
         generalUtils.buttonChangeColorOrForeground(submit, 255, 255, 255, false);
         generalUtils.customizeButton(submit, false);
@@ -94,9 +96,9 @@ public class Register extends JFrame {
 
         add(panel);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         setBounds(0, 0, 600, 400);
-        setResizable(false);
+
     }
 
     private void registerUser(JButton btn) {
@@ -106,6 +108,7 @@ public class Register extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 User user = new User(idText.getText(), nameText.getText(), phoneText.getText(), mailText.getText());
+
                 try {
                     userService.createUser(user);
                     cleanText();
@@ -114,6 +117,7 @@ public class Register extends JFrame {
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
+                parent.goUserPage(0, 0, parent.getBodyWidth(), parent.getBodyWidth());
             }
         });
     }
