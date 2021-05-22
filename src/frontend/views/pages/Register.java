@@ -71,8 +71,8 @@ public class Register extends JPanel {
         nameText.setBounds((parent.getBodyWidth() / 2) + 80, (parent.getBodyHeight() / 3) - 30, 100, 25);
         idText.setBounds((parent.getBodyWidth() / 2) + 80, (parent.getBodyHeight() / 3) - 70, 100, 25);
 
-        alert.setBounds((parent.getBodyWidth() / 2) - 40, (parent.getBodyHeight() / 3) + 60, 200, 20);
-        generalUtils.changeFontAndText(alert, true, "Tahoma", 15, "USER IS SAVED.");
+        alert.setBounds((parent.getBodyWidth() / 2) - 80, (parent.getBodyHeight() / 3) + 200, 200, 20);
+        generalUtils.changeFontAndText(alert, true, "Tahoma", 20, "USER IS SAVED.");
         alert.setForeground(new Color(30, 140, 30));
         alert.setVisible(false);
 
@@ -117,7 +117,6 @@ public class Register extends JPanel {
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
-                parent.goUserPage(0, 0, parent.getBodyWidth(), parent.getBodyWidth());
             }
         });
     }
