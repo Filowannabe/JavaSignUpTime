@@ -28,8 +28,18 @@ public class GeneralUtils {
 
         if (background) {
             btn.setBackground(new Color(red, green, blue));
+        } else {
+            btn.setForeground(new Color(red, green, blue));
         }
-        btn.setForeground(new Color(red, green, blue));
+    }
+
+    public void labelChangeColorOrForeground(JLabel label, int red, int green, int blue, boolean background) {
+
+        if (background) {
+            label.setBackground(new Color(red, green, blue));
+        } else {
+            label.setForeground(new Color(red, green, blue));
+        }
     }
 
     public void changeFontAndText(JLabel label, boolean bold, String newFont, int size, String text) {

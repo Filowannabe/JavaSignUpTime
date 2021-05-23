@@ -78,7 +78,7 @@ public class Register extends JPanel {
 
         submit = new JButton("submit");
         submit.setBounds((parent.getBodyWidth() / 2) - 80, (parent.getBodyHeight() / 3) + 120, 150, 35);
-        submit.setBackground(new Color(30, 140, 30));
+        generalUtils.buttonChangeColorOrForeground(submit, 30, 140, 30, true);
         generalUtils.buttonChangeColorOrForeground(submit, 255, 255, 255, false);
         generalUtils.customizeButton(submit, false);
         registerUser(submit);

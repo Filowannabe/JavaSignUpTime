@@ -4,6 +4,8 @@ import java.awt.Color;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 import backend.models.User;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -14,8 +16,8 @@ import frontend.navigator.Navigator;
 
 public class UserDescriptionUtils {
 
-        GeneralUtils generalUtils;
-        GroupLayout bodyLayout;
+        private GeneralUtils generalUtils;
+        private GroupLayout bodyLayout;
 
         public UserDescriptionUtils() {
                 generalUtils = new GeneralUtils();
@@ -26,7 +28,7 @@ public class UserDescriptionUtils {
                         ArrayList<User> users) {
 
                 grid.setLayout(new GridLayout(4, 10, 20, 20));
-                grid.setBackground(Color.BLACK);
+                grid.setBackground(new Color(36, 36, 36));
 
                 JPanel[] body, bodyContent;
                 body = new JPanel[itemsNumber];
@@ -57,34 +59,47 @@ public class UserDescriptionUtils {
                         phoneValue[i] = new JLabel();
                         mailValue[i] = new JLabel();
 
-                        bodyContent[i].setBackground(new Color(255, 255, 255));
+                        idValue[i].setHorizontalAlignment(SwingConstants.RIGHT);
+                        nameValue[i].setHorizontalAlignment(SwingConstants.RIGHT);
+                        phoneValue[i].setHorizontalAlignment(SwingConstants.RIGHT);
+                        mailValue[i].setHorizontalAlignment(SwingConstants.RIGHT);
+
+                        bodyContent[i].setBackground(Color.BLACK);
                         bodyContent[i].setLayout(null);
 
                         generalUtils.changeFontAndText(lblId[i], true, "Tahoma", 20, "ID:");
                         generalUtils.changeFontAndText(idValue[i], true, "Tahoma", 20, users.get(i).getId().toString());
-                        lblId[i].setBounds(25, 10, 80, 20);
-                        idValue[i].setBounds(250, 10, 80, 20);
+                        generalUtils.labelChangeColorOrForeground(lblId[i], 255, 255, 255, false);
+                        generalUtils.labelChangeColorOrForeground(idValue[i], 30, 140, 30, false);
+                        lblId[i].setBounds(20, 10, 80, 20);
+                        idValue[i].setBounds(200, 10, 100, 20);
                         bodyContent[i].add(lblId[i]);
                         bodyContent[i].add(idValue[i]);
 
                         generalUtils.changeFontAndText(lblName[i], true, "Tahoma", 20, "NAME:");
                         generalUtils.changeFontAndText(nameValue[i], true, "Tahoma", 20, users.get(i).getName());
-                        lblName[i].setBounds(25, 40, 80, 20);
-                        nameValue[i].setBounds(250, 40, 80, 20);
+                        generalUtils.labelChangeColorOrForeground(lblName[i], 255, 255, 255, false);
+                        generalUtils.labelChangeColorOrForeground(nameValue[i], 30, 140, 30, false);
+                        lblName[i].setBounds(20, 40, 80, 20);
+                        nameValue[i].setBounds(200, 40, 100, 20);
                         bodyContent[i].add(lblName[i]);
                         bodyContent[i].add(nameValue[i]);
 
                         generalUtils.changeFontAndText(lblPhone[i], true, "Tahoma", 20, "PHONE:");
                         generalUtils.changeFontAndText(phoneValue[i], true, "Tahoma", 20, users.get(i).getPhone());
-                        lblPhone[i].setBounds(25, 80, 80, 20);
-                        phoneValue[i].setBounds(250, 80, 80, 20);
+                        generalUtils.labelChangeColorOrForeground(lblPhone[i], 255, 255, 255, false);
+                        generalUtils.labelChangeColorOrForeground(phoneValue[i], 30, 140, 30, false);
+                        lblPhone[i].setBounds(20, 80, 80, 20);
+                        phoneValue[i].setBounds(200, 80, 100, 20);
                         bodyContent[i].add(lblPhone[i]);
                         bodyContent[i].add(phoneValue[i]);
 
                         generalUtils.changeFontAndText(lblMail[i], true, "Tahoma", 20, "MAIL:");
                         generalUtils.changeFontAndText(mailValue[i], true, "Tahoma", 20, users.get(i).getMail());
-                        lblMail[i].setBounds(25, 120, 80, 20);
-                        mailValue[i].setBounds(250, 120, 80, 20);
+                        generalUtils.labelChangeColorOrForeground(lblMail[i], 255, 255, 255, false);
+                        generalUtils.labelChangeColorOrForeground(mailValue[i], 30, 140, 30, false);
+                        lblMail[i].setBounds(20, 120, 80, 20);
+                        mailValue[i].setBounds(200, 120, 100, 20);
                         bodyContent[i].add(lblMail[i]);
                         bodyContent[i].add(mailValue[i]);
 
@@ -110,7 +125,7 @@ public class UserDescriptionUtils {
                 panel[i].addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                                parent.goRegisterPage(0, 0, parent.getBodyWidth(), parent.getBodyHeight());
+                                parent.goRegisterPage(0, 50, parent.getBodyWidth(), parent.getBodyHeight());
                         }
 
                         @Override
@@ -123,7 +138,7 @@ public class UserDescriptionUtils {
         public void initBody(JPanel body, JPanel bodyContent, int width, int height) {
                 bodyLayout = new GroupLayout(body);
                 body.setLayout(bodyLayout);
-                body.setBackground(new Color(23, 123, 23));
+                body.setBackground(new Color(36, 36, 36));
                 setBodyLayoutGroup(body, bodyContent, width, height);
         }
 
@@ -138,7 +153,6 @@ public class UserDescriptionUtils {
                                 GroupLayout.Alignment.TRAILING,
                                 bodyLayout.createSequentialGroup().addGap(0, 0, 0).addComponent(bodyContent,
                                                 GroupLayout.PREFERRED_SIZE, height, GroupLayout.PREFERRED_SIZE)));
-
         }
 
 }

@@ -1,6 +1,8 @@
 package frontend.views.pages;
 
 import javax.swing.JPanel;
+
+import java.awt.Color;
 import java.util.ArrayList;
 import backend.models.User;
 import frontend.navigator.Navigator;
@@ -16,5 +18,6 @@ public class UserPage extends JPanel {
         userDescription.setBounds(0, 0, parent.getBodyWidth(), parent.getBodyWidth());
 
         add(userDescription);
+        setBackground(new Color(36, 36, 36));
     }
 }

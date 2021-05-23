@@ -3,10 +3,8 @@ package frontend.views.widget;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-
 import frontend.navigator.Navigator;
 import frontend.views.utils.UserDescriptionUtils;
-
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
@@ -25,7 +23,7 @@ public class UserDescription extends JPanel {
         JPanel gridLayout = new JPanel();
         flowLayout.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         flowLayout.add(userDescriptionUtils.listAllUsers(parent, gridLayout, 300, 400, users.size(), users));
-        flowLayout.setBackground(Color.BLACK);
+        flowLayout.setBackground(new Color(36, 36, 36));
 
         JScrollPane scrollBar = new JScrollPane();
 
@@ -44,9 +42,10 @@ public class UserDescription extends JPanel {
         }
 
         scrollBar.setBackground(Color.BLACK);
-        scrollBar.setBounds(0, 20, parent.getBodyWidth(), parent.getBodyHeight() - 75);
+        scrollBar.setBounds(0, 0, parent.getBodyWidth(), parent.getBodyHeight() - 100);
 
         add(scrollBar);
         setBackground(Color.BLACK);
+        setBackground(new Color(36, 36, 36));
     }
 }

@@ -2,17 +2,21 @@ package frontend.navigator;
 
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
+import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import backend.models.User;
 import backend.services.UserService;
 import frontend.views.pages.Register;
 import frontend.views.pages.UserPage;
+import frontend.views.utils.GeneralUtils;
 
 public class Navigator extends JFrame {
     private JPanel body;
@@ -20,11 +24,42 @@ public class Navigator extends JFrame {
     private Dimension sizeScreen = screen.getScreenSize();
     private GroupLayout bodyLayout;
     private JScrollPane scrollBar;
+    private GeneralUtils generalUtils;
+    private JPanel navBar;
+    private JButton registerBtn;
+    private JButton listAllUsersBtn;
 
     public Navigator() {
         body = new JPanel();
         initBody(body, getBodyHeight());
         add(scrollBar);
+    }
+
+    private JPanel initNavBar() {
+        generalUtils = new GeneralUtils();
+        navBar = new JPanel();
+
+        registerBtn = new JButton();
+        registerBtn.setBounds(10, 10, 120, 30);
+        generalUtils.buttonChangeColorOrForeground(registerBtn, 255, 255, 255, false);
+        generalUtils.buttonChangeColorOrForeground(registerBtn, 70, 70, 70, true);
+        generalUtils.changeFontAndText(registerBtn, true, "Tahoma", 15, "Register");
+        generalUtils.customizeButton(registerBtn, false);
+        goRegisterPageAction(registerBtn);
+
+        listAllUsersBtn = new JButton();
+        listAllUsersBtn.setBounds(140, 10, 120, 30);
+        generalUtils.buttonChangeColorOrForeground(listAllUsersBtn, 255, 255, 255, false);
+        generalUtils.buttonChangeColorOrForeground(listAllUsersBtn, 70, 70, 70, true);
+        generalUtils.changeFontAndText(listAllUsersBtn, true, "Tahoma", 15, "List");
+        generalUtils.customizeButton(listAllUsersBtn, false);
+        goUserPageAction(listAllUsersBtn);
+
+        navBar.setBackground(new Color(0, 0, 0));
+        navBar.add(registerBtn);
+        navBar.add(listAllUsersBtn);
+
+        return navBar;
     }
 
     public void bodyAddComponent(JPanel panel, int x, int y, int width, int height) {
@@ -37,6 +72,7 @@ public class Navigator extends JFrame {
         scrollBar.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         body.removeAll();
         setBodyLayoutGroup(height);
+        bodyAddComponent(initNavBar(), 0, 0, getBodyWidth(), 50);
         repaintAndRevalidate();
         Register register = new Register(this);
         register.setBounds(x, y, width, height);
@@ -50,6 +86,7 @@ public class Navigator extends JFrame {
         scrollBar.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         body.removeAll();
         setBodyLayoutGroup(height);
+        bodyAddComponent(initNavBar(), 0, 0, getBodyWidth(), 50);
         repaintAndRevalidate();
         UserService userService = new UserService();
         ArrayList<User> users = userService.getAllUsers();
@@ -108,6 +145,25 @@ public class Navigator extends JFrame {
                 bodyLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 0, Short.MAX_VALUE));
         bodyLayout.setVerticalGroup(
                 bodyLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, height, Short.MAX_VALUE));
+    }
+
+    private void goUserPageAction(JButton btn) {
+        btn.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                goUserPage(0, 50, getBodyWidth(), getBodyHeight());
+            }
+        });
+    }
+
+    private void goRegisterPageAction(JButton btn) {
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                goRegisterPage(0, 50, getBodyWidth(), getBodyHeight());
+            }
+        });
     }
 
 }
