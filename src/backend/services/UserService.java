@@ -19,17 +19,14 @@ public class UserService {
         try {
             ResultSet rs = userRepository.getAllUsers();
             ArrayList<User> users = new ArrayList<User>();
-
             while (rs.next()) {
                 User user = new User(rs.getString("id"), rs.getString("name"), rs.getString("phone"),
                         rs.getString("mail"));
                 users.add(user);
             }
-
             return users;
-
         } catch (SQLException e) {
-
+            e.printStackTrace();
         }
         return null;
     }
@@ -43,8 +40,24 @@ public class UserService {
                 return user;
             }
         } catch (SQLException e) {
-
+            e.printStackTrace();
         }
         return null;
+    }
+
+    public void deleteUserById(String username) {
+        try {
+            userRepository.deleteUserById(username);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editUserById(String id,String username, String phone, String mail) {
+        try {
+            userRepository.updateUserById(id, username, phone, mail);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

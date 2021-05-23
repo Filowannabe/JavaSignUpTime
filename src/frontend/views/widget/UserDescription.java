@@ -43,7 +43,7 @@ public class UserDescription extends JPanel {
         scrollBar.setBorder(null);
         scrollBar.setOpaque(false);
         scrollBar.setBackground(Color.BLACK);
-        scrollBar.setBounds(0, 0, parent.getBodyWidth(), parent.getBodyHeight() - 100);
+        scrollBar.setBounds(0, 10, parent.getBodyWidth(), parent.getBodyHeight() - 112);
 
         add(scrollBar);
         setBackground(Color.BLACK);

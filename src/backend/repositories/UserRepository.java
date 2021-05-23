@@ -41,4 +41,22 @@ public class UserRepository {
 
         return resultSet;
     }
+
+    public void deleteUserById(String username) throws SQLException {
+
+        String query = "delete from users where name=?";
+        preparedStatement = conection.setConection().prepareStatement(query);
+        preparedStatement.setString(1, username);
+        preparedStatement.execute();
+    }
+
+    public void updateUserById(String id, String username, String phone, String mail) throws SQLException {
+
+        String query = "update users set name=?,phone=?,mail=? where name= '" + id + "'";
+        preparedStatement = conection.setConection().prepareStatement(query);
+        preparedStatement.setString(1, username);
+        preparedStatement.setString(2, phone);
+        preparedStatement.setString(3, mail);
+        preparedStatement.executeUpdate();
+    }
 }

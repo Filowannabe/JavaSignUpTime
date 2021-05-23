@@ -1,10 +1,17 @@
 package frontend.views.pages;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import backend.models.User;
+import backend.services.UserService;
+
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import frontend.navigator.Navigator;
 import frontend.views.utils.GeneralUtils;
 
@@ -13,10 +20,16 @@ public class FindUserPage extends JPanel {
     private JLabel lblId, lblName, lblPhone, lblMail;
     private JTextField idValue, nameValue, phoneValue, mailValue;
     private GeneralUtils generalUtils;
+    private JCheckBox enableFieldsBtn;
+    JButton deleteBtn, editBtn;
+    private UserService userService;
+    private User user;
 
     public FindUserPage(Navigator parent, User user) {
         generalUtils = new GeneralUtils();
+        userService = new UserService();
         this.parent = parent;
+        this.user = user;
 
         lblId = new JLabel();
         lblName = new JLabel();
@@ -28,6 +41,31 @@ public class FindUserPage extends JPanel {
         phoneValue = new JTextField();
         mailValue = new JTextField();
         disableTextFields();
+
+        deleteBtn = new JButton();
+        deleteBtn.setBounds((parent.getBodyHeight() / 2) - 10, (parent.getBodyHeight() / 3) + 80, 100, 40);
+        generalUtils.customizeButton(deleteBtn, false);
+        generalUtils.buttonChangeColorOrForeground(deleteBtn, 70, 70, 70, true);
+        generalUtils.buttonChangeColorOrForeground(deleteBtn, 255, 255, 255, false);
+        generalUtils.changeFontAndText(deleteBtn, true, "Tahoma", 15, "Delete");
+        deleteButtonAction(deleteBtn);
+        add(deleteBtn);
+
+        editBtn = new JButton();
+        editBtn.setBounds((parent.getBodyHeight() / 2) - 120, (parent.getBodyHeight() / 3) + 80, 100, 40);
+        generalUtils.customizeButton(editBtn, false);
+        generalUtils.buttonChangeColorOrForeground(editBtn, 70, 70, 70, true);
+        generalUtils.buttonChangeColorOrForeground(editBtn, 255, 255, 255, false);
+        generalUtils.changeFontAndText(editBtn, true, "Tahoma", 15, "Save");
+        editButtonAction(editBtn);
+        add(editBtn);
+
+        enableFieldsBtn = new JCheckBox();
+        enableFieldsBtn.setBackground(null);
+        enableFieldsBtn.setBounds((parent.getBodyHeight() / 2) + 100, (parent.getBodyHeight() / 3) - 120, 50, 30);
+        addCheckBoxEvent(enableFieldsBtn);
+        add(enableFieldsBtn);
+
         generalUtils.changeFontAndText(lblId, true, "Tahoma", 20, "ID:");
         generalUtils.labelChangeColorOrForeground(lblId, 255, 255, 255, false);
         lblId.setBounds((parent.getBodyHeight() / 2) - 120, (parent.getBodyHeight() / 3) - 80, 80, 20);
@@ -77,4 +115,49 @@ public class FindUserPage extends JPanel {
         mailValue.setEnabled(false);
     }
 
+    private void addCheckBoxEvent(JCheckBox box) {
+        box.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EnableTextFields(enableFieldsBtn);
+            }
+
+        });
+    }
+
+    private void EnableTextFields(JCheckBox box) {
+        if (box.isSelected()) {
+            idValue.setEnabled(true);
+            nameValue.setEnabled(true);
+            phoneValue.setEnabled(true);
+            mailValue.setEnabled(true);
+        } else {
+            disableTextFields();
+        }
+    }
+
+    private void deleteButtonAction(JButton btn) {
+        btn.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                userService.deleteUserById(user.getName());
+                parent.goRegisterPage(0, 50, parent.getBodyWidth(), parent.getBodyHeight());
+            }
+        });
+    }
+
+    private void editButtonAction(JButton btn) {
+        btn.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                userService.editUserById(user.getName(), nameValue.getText(), phoneValue.getText(),
+                        mailValue.getText());
+                parent.goRegisterPage(0, 50, parent.getBodyWidth(), parent.getBodyHeight());
+            }
+
+        });
+    }
 }
