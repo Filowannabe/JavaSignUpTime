@@ -4,16 +4,22 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyAdapter;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import backend.models.User;
 import backend.services.UserService;
+import frontend.views.pages.FindUserPage;
 import frontend.views.pages.Register;
 import frontend.views.pages.UserPage;
 import frontend.views.utils.GeneralUtils;
@@ -28,6 +34,11 @@ public class Navigator extends JFrame {
     private JPanel navBar;
     private JButton registerBtn;
     private JButton listAllUsersBtn;
+    private JTextField findTextField;
+    private UserService userService;
+    private Timer findFieldTimer = new Timer();
+    private TimerTask timerTask;
+    private String findTextValue;
 
     public Navigator() {
         body = new JPanel();
@@ -55,9 +66,29 @@ public class Navigator extends JFrame {
         generalUtils.customizeButton(listAllUsersBtn, false);
         goUserPageAction(listAllUsersBtn);
 
+        findTextField = new JTextField();
+        findTextField.setBounds((getBodyWidth() / 2) - 200, 10, 400, 30);
+        findTextValue = "";
+        findTextField.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                cancelTimer();
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                findTextValue = findTextField.getText();
+                if (!findTextField.getText().equals("") && !findTextValue.equals("")) {
+                    startFindFieldTimer(findTextValue);
+                }
+            }
+
+        });
         navBar.setBackground(new Color(0, 0, 0));
         navBar.add(registerBtn);
         navBar.add(listAllUsersBtn);
+        navBar.add(findTextField);
 
         return navBar;
     }
@@ -88,12 +119,35 @@ public class Navigator extends JFrame {
         setBodyLayoutGroup(height);
         bodyAddComponent(initNavBar(), 0, 0, getBodyWidth(), 50);
         repaintAndRevalidate();
-        UserService userService = new UserService();
+        userService = new UserService();
         ArrayList<User> users = userService.getAllUsers();
         UserPage userPage = new UserPage(this, users);
         userPage.setBounds(x, y, width, height);
         userPage.setLayout(null);
         body.add(userPage);
+        repaintAndRevalidate();
+    }
+
+    public void goFindedUserPage(int x, int y, int width, int height, String username) {
+        cancelTimer();
+        scrollBar.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        scrollBar.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        body.removeAll();
+        setBodyLayoutGroup(height);
+        bodyAddComponent(initNavBar(), 0, 0, getBodyWidth(), 50);
+        repaintAndRevalidate();
+
+        userService = new UserService();
+        User user = userService.getUserById(username);
+
+        if (user == null) {
+            goRegisterPage(0, 50, getBodyWidth(), getBodyHeight());
+        } else {
+            FindUserPage findUserPage = new FindUserPage(this, user);
+            findUserPage.setBounds(x, y, width, height);
+            findUserPage.setLayout(null);
+            body.add(findUserPage);
+        }
         repaintAndRevalidate();
     }
 
@@ -166,4 +220,24 @@ public class Navigator extends JFrame {
         });
     }
 
+    private void startFindFieldTimer(String text) {
+        cancelTimer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                goFindedUserPage(0, 50, getBodyWidth(), getBodyHeight(), text);
+                findTextField.setText("");
+                findTextValue = "";
+            }
+        };
+        findFieldTimer.schedule(timerTask, 1000, 1000);
+    }
+
+    private void cancelTimer() {
+        try {
+            timerTask.cancel();
+        } catch (Exception e) {
+
+        }
+    }
 }

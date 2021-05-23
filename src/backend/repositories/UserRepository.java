@@ -31,4 +31,14 @@ public class UserRepository {
 
         return resultSet;
     }
+
+    public ResultSet findUserById(String username) throws SQLException {
+
+        String query = "select * from users where name=?";
+        preparedStatement = conection.setConection().prepareStatement(query);
+        preparedStatement.setString(1, username);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        return resultSet;
+    }
 }

@@ -33,4 +33,18 @@ public class UserService {
         }
         return null;
     }
+
+    public User getUserById(String username) {
+        try {
+            ResultSet rs = userRepository.findUserById(username);
+            if (rs.next()) {
+                User user = new User(rs.getString("id"), rs.getString("name"), rs.getString("phone"),
+                        rs.getString("mail"));
+                return user;
+            }
+        } catch (SQLException e) {
+
+        }
+        return null;
+    }
 }
