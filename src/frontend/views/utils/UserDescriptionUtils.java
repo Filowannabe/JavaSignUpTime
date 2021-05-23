@@ -5,7 +5,6 @@ import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
 import backend.models.User;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -112,7 +111,7 @@ public class UserDescriptionUtils {
                         } else if (users.size() < 13) {
                                 initBody(body[i], bodyContent[i], parent.getBodyWidth() / 3, 400);
                         } else {
-                                initBody(body[i], bodyContent[i], parent.getBodyWidth() / 5, 400);
+                                initBody(body[i], bodyContent[i], parent.getBodyWidth() / 4, 400);
                         }
 
                         grid.add(body[i]);

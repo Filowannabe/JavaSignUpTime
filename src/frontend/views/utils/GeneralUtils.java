@@ -3,9 +3,12 @@ package frontend.views.utils;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Cursor;
 
@@ -50,6 +53,27 @@ public class GeneralUtils {
         } else {
             label.setText(text);
             label.setFont(new Font(newFont, Font.ITALIC, size));
+        }
+    }
+
+    public void changeFontAndText(JTextField field, boolean bold, String newFont, int size, String text) {
+        field.setOpaque(false);
+        field.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(204, 204, 204)));
+        if (bold) {
+            field.setFont(new Font(newFont, Font.BOLD, size));
+            field.setText(text);
+        } else {
+            field.setText(text);
+            field.setFont(new Font(newFont, Font.ITALIC, size));
+        }
+    }
+
+    public void textChangeColorOrForeground(JTextField field, int red, int green, int blue, boolean background) {
+
+        if (background) {
+            field.setBackground(new Color(red, green, blue));
+        } else {
+            field.setForeground(new Color(red, green, blue));
         }
     }
 

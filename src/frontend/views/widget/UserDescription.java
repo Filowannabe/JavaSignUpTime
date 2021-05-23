@@ -40,7 +40,8 @@ public class UserDescription extends JPanel {
         } else {
             scrollBar.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         }
-
+        scrollBar.setBorder(null);
+        scrollBar.setOpaque(false);
         scrollBar.setBackground(Color.BLACK);
         scrollBar.setBounds(0, 0, parent.getBodyWidth(), parent.getBodyHeight() - 100);
 
