@@ -7,11 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import backend.models.User;
 import backend.services.UserService;
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import frontend.navigator.Navigator;
 import frontend.views.utils.GeneralUtils;
 
@@ -21,7 +19,7 @@ public class FindUserPage extends JPanel {
     private JTextField idValue, nameValue, phoneValue, mailValue;
     private GeneralUtils generalUtils;
     private JCheckBox enableFieldsBtn;
-    JButton deleteBtn, editBtn;
+    private JButton deleteBtn, editBtn;
     private UserService userService;
     private User user;
 
