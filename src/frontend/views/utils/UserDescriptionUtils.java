@@ -33,56 +33,59 @@ public class UserDescriptionUtils {
                 body = new JPanel[itemsNumber];
                 bodyContent = new JPanel[itemsNumber];
 
-                JLabel[] lblId, lblName, lblPhone, lblMail, idValue, nameValue, phoneValue, mailValue;
+                JLabel[] lblUsername, lblPassword, lblPhone, lblMail, usernameValue, passwordValue, phoneValue,
+                                mailValue;
 
-                lblId = new JLabel[itemsNumber];
-                lblName = new JLabel[itemsNumber];
+                lblUsername = new JLabel[itemsNumber];
+                lblPassword = new JLabel[itemsNumber];
                 lblPhone = new JLabel[itemsNumber];
                 lblMail = new JLabel[itemsNumber];
 
-                idValue = new JLabel[itemsNumber];
-                nameValue = new JLabel[itemsNumber];
+                usernameValue = new JLabel[itemsNumber];
+                passwordValue = new JLabel[itemsNumber];
                 phoneValue = new JLabel[itemsNumber];
                 mailValue = new JLabel[itemsNumber];
 
                 for (int i = 0; i < itemsNumber; i++) {
                         body[i] = new JPanel();
                         bodyContent[i] = new JPanel();
-                        lblId[i] = new JLabel();
-                        lblName[i] = new JLabel();
+                        lblUsername[i] = new JLabel();
+                        lblPassword[i] = new JLabel();
                         lblPhone[i] = new JLabel();
                         lblMail[i] = new JLabel();
 
-                        idValue[i] = new JLabel();
-                        nameValue[i] = new JLabel();
+                        usernameValue[i] = new JLabel();
+                        passwordValue[i] = new JLabel();
                         phoneValue[i] = new JLabel();
                         mailValue[i] = new JLabel();
 
-                        idValue[i].setHorizontalAlignment(SwingConstants.RIGHT);
-                        nameValue[i].setHorizontalAlignment(SwingConstants.RIGHT);
+                        usernameValue[i].setHorizontalAlignment(SwingConstants.RIGHT);
+                        passwordValue[i].setHorizontalAlignment(SwingConstants.RIGHT);
                         phoneValue[i].setHorizontalAlignment(SwingConstants.RIGHT);
                         mailValue[i].setHorizontalAlignment(SwingConstants.RIGHT);
 
                         bodyContent[i].setBackground(Color.BLACK);
                         bodyContent[i].setLayout(null);
 
-                        generalUtils.changeFontAndText(lblId[i], true, "Tahoma", 20, "ID:");
-                        generalUtils.changeFontAndText(idValue[i], true, "Tahoma", 20, users.get(i).getId().toString());
-                        generalUtils.labelChangeColorOrForeground(lblId[i], 255, 255, 255, false);
-                        generalUtils.labelChangeColorOrForeground(idValue[i], 30, 140, 30, false);
-                        lblId[i].setBounds(20, 10, 80, 20);
-                        idValue[i].setBounds(200, 10, 100, 20);
-                        bodyContent[i].add(lblId[i]);
-                        bodyContent[i].add(idValue[i]);
+                        generalUtils.changeFontAndText(lblUsername[i], true, "Tahoma", 20, "USERNAME:");
+                        generalUtils.changeFontAndText(usernameValue[i], true, "Tahoma", 20,
+                                        users.get(i).getUsername().toString());
+                        generalUtils.labelChangeColorOrForeground(lblUsername[i], 255, 255, 255, false);
+                        generalUtils.labelChangeColorOrForeground(usernameValue[i], 30, 140, 30, false);
+                        lblUsername[i].setBounds(20, 10, 130, 20);
+                        usernameValue[i].setBounds(200, 10, 100, 20);
+                        bodyContent[i].add(lblUsername[i]);
+                        bodyContent[i].add(usernameValue[i]);
 
-                        generalUtils.changeFontAndText(lblName[i], true, "Tahoma", 20, "NAME:");
-                        generalUtils.changeFontAndText(nameValue[i], true, "Tahoma", 20, users.get(i).getName());
-                        generalUtils.labelChangeColorOrForeground(lblName[i], 255, 255, 255, false);
-                        generalUtils.labelChangeColorOrForeground(nameValue[i], 30, 140, 30, false);
-                        lblName[i].setBounds(20, 40, 80, 20);
-                        nameValue[i].setBounds(200, 40, 100, 20);
-                        bodyContent[i].add(lblName[i]);
-                        bodyContent[i].add(nameValue[i]);
+                        generalUtils.changeFontAndText(lblPassword[i], true, "Tahoma", 20, "PASSWORD:");
+                        generalUtils.changeFontAndText(passwordValue[i], true, "Tahoma", 20,
+                                        users.get(i).getPassword());
+                        generalUtils.labelChangeColorOrForeground(lblPassword[i], 255, 255, 255, false);
+                        generalUtils.labelChangeColorOrForeground(passwordValue[i], 30, 140, 30, false);
+                        lblPassword[i].setBounds(20, 45, 130, 20);
+                        passwordValue[i].setBounds(200, 40, 100, 20);
+                        bodyContent[i].add(lblPassword[i]);
+                        bodyContent[i].add(passwordValue[i]);
 
                         generalUtils.changeFontAndText(lblPhone[i], true, "Tahoma", 20, "PHONE:");
                         generalUtils.changeFontAndText(phoneValue[i], true, "Tahoma", 20, users.get(i).getPhone());
@@ -102,7 +105,7 @@ public class UserDescriptionUtils {
                         bodyContent[i].add(lblMail[i]);
                         bodyContent[i].add(mailValue[i]);
 
-                        goRegisterPage(bodyContent, i, parent);
+                        goFindUser(bodyContent, i, parent, users);
 
                         if (users.size() < 5) {
                                 initBody(body[i], bodyContent[i], parent.getBodyWidth() - 50, 400);
@@ -120,11 +123,12 @@ public class UserDescriptionUtils {
                 return grid;
         }
 
-        public void goRegisterPage(JPanel[] panel, int i, Navigator parent) {
+        public void goFindUser(JPanel[] panel, int i, Navigator parent, ArrayList<User> users) {
                 panel[i].addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                                parent.goRegisterPage(0, 50, parent.getBodyWidth(), parent.getBodyHeight());
+                                parent.goFindedUserPage(0, 50, parent.getBodyWidth(), parent.getBodyHeight(),
+                                                users.get(i).getUsername());
                         }
 
                         @Override

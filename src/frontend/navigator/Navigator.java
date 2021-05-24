@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,6 +21,7 @@ import javax.swing.ScrollPaneConstants;
 import backend.models.User;
 import backend.services.UserService;
 import frontend.views.pages.FindUserPage;
+import frontend.views.pages.NotFound;
 import frontend.views.pages.Register;
 import frontend.views.pages.UserPage;
 import frontend.views.utils.GeneralUtils;
@@ -68,6 +70,8 @@ public class Navigator extends JFrame {
 
         findTextField = new JTextField();
         findTextField.setBounds((getBodyWidth() / 2) - 200, 10, 400, 30);
+        generalUtils.textChangeColorOrForeground(findTextField, 0, 0, 0, false);
+        findTextField.setFont(new Font("Tahoma", Font.BOLD, 15));
         findTextValue = "";
         findTextField.addKeyListener(new KeyAdapter() {
 
@@ -128,6 +132,20 @@ public class Navigator extends JFrame {
         repaintAndRevalidate();
     }
 
+    public void goNotFoundedPage(int x, int y, int width, int height) {
+        scrollBar.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        scrollBar.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        body.removeAll();
+        setBodyLayoutGroup(height);
+        bodyAddComponent(initNavBar(), 0, 0, getBodyWidth(), 50);
+        repaintAndRevalidate();
+        NotFound notFound = new NotFound(this);
+        notFound.setBounds(x, y, width, height);
+        notFound.setLayout(null);
+        body.add(notFound);
+        repaintAndRevalidate();
+    }
+
     public void goFindedUserPage(int x, int y, int width, int height, String username) {
         cancelTimer();
         scrollBar.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -138,10 +156,10 @@ public class Navigator extends JFrame {
         repaintAndRevalidate();
 
         userService = new UserService();
-        User user = userService.getUserById(username);
+        User user = userService.getUserByUsername(username);
 
         if (user == null) {
-            goRegisterPage(0, 50, getBodyWidth(), getBodyHeight());
+            goNotFoundedPage(0, 50, getBodyWidth(), getBodyHeight());
         } else {
             FindUserPage findUserPage = new FindUserPage(this, user);
             findUserPage.setBounds(x, y, width, height);

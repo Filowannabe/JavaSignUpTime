@@ -2,16 +2,16 @@ package backend.models;
 
 public class User {
 
-    private String id;
-    private String name;
+    private String username;
+    private String password;
     private String phone;
     private String mail;
 
-    public User(String id, String name, String phone, String mail) {
-        this.setId(id);
-        this.setName(name);
-        this.setPhone(phone);
-        this.setMail(mail);
+    public User(String username, String password, String phone, String mail) {
+        this.username = username;
+        this.password = password;
+        this.phone = phone;
+        this.mail = mail;
     }
 
     public String getMail() {
@@ -30,20 +30,20 @@ public class User {
         this.phone = phone;
     }
 
-    public String getName() {
-        return name;
+    public String getPassword() {
+        return password;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }

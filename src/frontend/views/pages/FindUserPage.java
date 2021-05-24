@@ -4,7 +4,10 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import backend.models.User;
 import backend.services.UserService;
 import java.awt.Color;
@@ -15,8 +18,10 @@ import frontend.views.utils.GeneralUtils;
 
 public class FindUserPage extends JPanel {
     private Navigator parent;
-    private JLabel lblId, lblName, lblPhone, lblMail;
-    private JTextField idValue, nameValue, phoneValue, mailValue;
+    private JLabel lblUsername, lblPassword, lblPhone, lblMail, lblIcon, lblEditIcon;
+    private JTextField usernameValue, phoneValue, mailValue;
+    private JPasswordField passwordValue;
+    private char passwordChar;
     private GeneralUtils generalUtils;
     private JCheckBox enableFieldsBtn;
     private JButton deleteBtn, editBtn;
@@ -29,19 +34,21 @@ public class FindUserPage extends JPanel {
         this.parent = parent;
         this.user = user;
 
-        lblId = new JLabel();
-        lblName = new JLabel();
+        lblUsername = new JLabel();
+        lblPassword = new JLabel();
         lblPhone = new JLabel();
         lblMail = new JLabel();
 
-        idValue = new JTextField();
-        nameValue = new JTextField();
+        usernameValue = new JTextField();
+        passwordValue = new JPasswordField();
+        passwordChar = passwordValue.getEchoChar();
+        passwordValue.setEchoChar(passwordChar);
         phoneValue = new JTextField();
         mailValue = new JTextField();
         disableTextFields();
 
         deleteBtn = new JButton();
-        deleteBtn.setBounds((parent.getBodyHeight() / 2) - 10, (parent.getBodyHeight() / 3) + 80, 100, 40);
+        deleteBtn.setBounds((parent.getBodyHeight() / 2) + 20, (parent.getBodyHeight() / 3) + 80, 100, 40);
         generalUtils.customizeButton(deleteBtn, false);
         generalUtils.buttonChangeColorOrForeground(deleteBtn, 70, 70, 70, true);
         generalUtils.buttonChangeColorOrForeground(deleteBtn, 255, 255, 255, false);
@@ -60,34 +67,34 @@ public class FindUserPage extends JPanel {
 
         enableFieldsBtn = new JCheckBox();
         enableFieldsBtn.setBackground(null);
-        enableFieldsBtn.setBounds((parent.getBodyHeight() / 2) + 100, (parent.getBodyHeight() / 3) - 120, 50, 30);
+        enableFieldsBtn.setBounds((parent.getBodyHeight() / 2) + 100, (parent.getBodyHeight() / 3) - 120, 20, 30);
         addCheckBoxEvent(enableFieldsBtn);
         add(enableFieldsBtn);
 
-        generalUtils.changeFontAndText(lblId, true, "Tahoma", 20, "ID:");
-        generalUtils.labelChangeColorOrForeground(lblId, 255, 255, 255, false);
-        lblId.setBounds((parent.getBodyHeight() / 2) - 120, (parent.getBodyHeight() / 3) - 80, 80, 20);
-        idValue.setBounds((parent.getBodyHeight() / 2) - 10, (parent.getBodyHeight() / 3) - 80, 100, 20);
-        generalUtils.changeFontAndText(idValue, true, "Tahoma", 20, user.getId());
-        generalUtils.textChangeColorOrForeground(idValue, 30, 140, 30, false);
-        generalUtils.textChangeColorOrForeground(idValue, 0, 0, 0, true);
-        add(lblId);
-        add(idValue);
+        generalUtils.changeFontAndText(lblUsername, true, "Tahoma", 20, "USERNAME:");
+        generalUtils.labelChangeColorOrForeground(lblUsername, 255, 255, 255, false);
+        lblUsername.setBounds((parent.getBodyHeight() / 2) - 120, (parent.getBodyHeight() / 3) - 80, 130, 20);
+        usernameValue.setBounds((parent.getBodyHeight() / 2) + 20, (parent.getBodyHeight() / 3) - 80, 100, 20);
+        generalUtils.changeFontAndText(usernameValue, true, "Tahoma", 20, user.getUsername());
+        generalUtils.textChangeColorOrForeground(usernameValue, 30, 140, 30, false);
+        generalUtils.textChangeColorOrForeground(usernameValue, 0, 0, 0, true);
+        add(lblUsername);
+        add(usernameValue);
 
-        generalUtils.changeFontAndText(lblName, true, "Tahoma", 20, "NAME:");
-        generalUtils.labelChangeColorOrForeground(lblName, 255, 255, 255, false);
-        lblName.setBounds((parent.getBodyHeight() / 2) - 120, (parent.getBodyHeight() / 3) - 40, 80, 20);
-        nameValue.setBounds((parent.getBodyHeight() / 2) - 10, (parent.getBodyHeight() / 3) - 40, 100, 20);
-        generalUtils.changeFontAndText(nameValue, true, "Tahoma", 20, user.getName());
-        generalUtils.textChangeColorOrForeground(nameValue, 30, 140, 30, false);
-        generalUtils.textChangeColorOrForeground(nameValue, 0, 0, 0, true);
-        add(lblName);
-        add(nameValue);
+        generalUtils.changeFontAndText(lblPassword, true, "Tahoma", 20, "PASSWORD:");
+        generalUtils.labelChangeColorOrForeground(lblPassword, 255, 255, 255, false);
+        lblPassword.setBounds((parent.getBodyHeight() / 2) - 120, (parent.getBodyHeight() / 3) - 40, 130, 20);
+        passwordValue.setBounds((parent.getBodyHeight() / 2) + 20, (parent.getBodyHeight() / 3) - 40, 100, 20);
+        generalUtils.changeFontAndText(passwordValue, true, "Tahoma", 20, user.getPassword());
+        generalUtils.textChangeColorOrForeground(passwordValue, 30, 140, 30, false);
+        generalUtils.textChangeColorOrForeground(passwordValue, 0, 0, 0, true);
+        add(lblPassword);
+        add(passwordValue);
 
         generalUtils.changeFontAndText(lblPhone, true, "Tahoma", 20, "PHONE:");
         generalUtils.labelChangeColorOrForeground(lblPhone, 255, 255, 255, false);
         lblPhone.setBounds((parent.getBodyHeight() / 2) - 120, (parent.getBodyHeight() / 3), 80, 20);
-        phoneValue.setBounds((parent.getBodyHeight() / 2) - 10, (parent.getBodyHeight() / 3), 100, 20);
+        phoneValue.setBounds((parent.getBodyHeight() / 2) + 20, (parent.getBodyHeight() / 3), 100, 20);
         generalUtils.changeFontAndText(phoneValue, true, "Tahoma", 20, user.getPhone());
         generalUtils.textChangeColorOrForeground(phoneValue, 30, 140, 30, false);
         generalUtils.textChangeColorOrForeground(phoneValue, 0, 0, 0, true);
@@ -97,18 +104,33 @@ public class FindUserPage extends JPanel {
         generalUtils.changeFontAndText(lblMail, true, "Tahoma", 20, "MAIL:");
         generalUtils.labelChangeColorOrForeground(lblMail, 255, 255, 255, false);
         lblMail.setBounds((parent.getBodyHeight() / 2) - 120, (parent.getBodyHeight() / 3) + 40, 80, 20);
-        mailValue.setBounds((parent.getBodyHeight() / 2) - 10, (parent.getBodyHeight() / 3) + 40, 100, 20);
+        mailValue.setBounds((parent.getBodyHeight() / 2) + 20, (parent.getBodyHeight() / 3) + 40, 100, 20);
         generalUtils.changeFontAndText(mailValue, true, "Tahoma", 20, user.getMail());
         generalUtils.textChangeColorOrForeground(mailValue, 30, 140, 30, false);
         generalUtils.textChangeColorOrForeground(mailValue, 0, 0, 0, true);
+
+        lblIcon = new JLabel();
+        lblIcon.setBounds((parent.getBodyHeight() / 2) + 550, (parent.getBodyHeight() / 6) - 80, 450, 450);
+        lblIcon.setHorizontalAlignment(SwingConstants.CENTER);
+        generalUtils.changeFontAndText(lblIcon, true, "MesloLGL Nerd Font", 450, "");
+        generalUtils.labelChangeColorOrForeground(lblIcon, 0, 0, 0, false);
+
+        lblEditIcon = new JLabel();
+        lblEditIcon.setBounds((parent.getBodyHeight() / 2) + 100, (parent.getBodyHeight() / 3) - 140, 70, 70);
+        lblEditIcon.setHorizontalAlignment(SwingConstants.CENTER);
+        generalUtils.changeFontAndText(lblEditIcon, true, "MesloLGL Nerd Font", 25, "");
+        generalUtils.labelChangeColorOrForeground(lblEditIcon, 0, 255, 20, false);
+
+        add(lblIcon);
+        add(lblEditIcon);
         add(lblMail);
         add(mailValue);
         setBackground(new Color(36, 36, 36));
     }
 
     private void disableTextFields() {
-        idValue.setEnabled(false);
-        nameValue.setEnabled(false);
+        usernameValue.setEnabled(false);
+        passwordValue.setEnabled(false);
         phoneValue.setEnabled(false);
         mailValue.setEnabled(false);
     }
@@ -126,8 +148,8 @@ public class FindUserPage extends JPanel {
 
     private void EnableTextFields(JCheckBox box) {
         if (box.isSelected()) {
-            idValue.setEnabled(true);
-            nameValue.setEnabled(true);
+            usernameValue.setEnabled(true);
+            passwordValue.setEnabled(true);
             phoneValue.setEnabled(true);
             mailValue.setEnabled(true);
         } else {
@@ -140,7 +162,7 @@ public class FindUserPage extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                userService.deleteUserById(user.getName());
+                userService.deleteUserByUsername(user.getUsername());
                 parent.goRegisterPage(0, 50, parent.getBodyWidth(), parent.getBodyHeight());
             }
         });
@@ -151,11 +173,10 @@ public class FindUserPage extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                userService.editUserById(user.getName(), nameValue.getText(), phoneValue.getText(),
-                        mailValue.getText());
+                userService.editUserByUsername(user.getUsername(), usernameValue.getText(), passwordValue.getText(),
+                        phoneValue.getText(), mailValue.getText());
                 parent.goRegisterPage(0, 50, parent.getBodyWidth(), parent.getBodyHeight());
             }
-
         });
     }
 }

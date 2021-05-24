@@ -12,7 +12,7 @@ public class UserService {
     UserRepository userRepository = new UserRepository();
 
     public void createUser(User user) throws SQLException {
-        userRepository.createUser(user.getId(), user.getName(), user.getPhone(), user.getMail());
+        userRepository.createUser(user.getUsername(), user.getPassword(), user.getPhone(), user.getMail());
     }
 
     public ArrayList<User> getAllUsers() {
@@ -20,7 +20,7 @@ public class UserService {
             ResultSet rs = userRepository.getAllUsers();
             ArrayList<User> users = new ArrayList<User>();
             while (rs.next()) {
-                User user = new User(rs.getString("id"), rs.getString("name"), rs.getString("phone"),
+                User user = new User(rs.getString("username"), rs.getString("password"), rs.getString("phone"),
                         rs.getString("mail"));
                 users.add(user);
             }
@@ -31,11 +31,11 @@ public class UserService {
         return null;
     }
 
-    public User getUserById(String username) {
+    public User getUserByUsername(String username) {
         try {
             ResultSet rs = userRepository.findUserById(username);
             if (rs.next()) {
-                User user = new User(rs.getString("id"), rs.getString("name"), rs.getString("phone"),
+                User user = new User(rs.getString("username"), rs.getString("password"), rs.getString("phone"),
                         rs.getString("mail"));
                 return user;
             }
@@ -45,7 +45,7 @@ public class UserService {
         return null;
     }
 
-    public void deleteUserById(String username) {
+    public void deleteUserByUsername(String username) {
         try {
             userRepository.deleteUserById(username);
         } catch (SQLException e) {
@@ -53,9 +53,9 @@ public class UserService {
         }
     }
 
-    public void editUserById(String id,String username, String phone, String mail) {
+    public void editUserByUsername(String id, String username, String password, String phone, String mail) {
         try {
-            userRepository.updateUserById(id, username, phone, mail);
+            userRepository.updateUserById(id, username, password, phone, mail);
         } catch (SQLException e) {
             e.printStackTrace();
         }
